@@ -34,4 +34,4 @@ export function Form({ fullNameRef, messageRef, onSubmit }) {
   );
 }
 
-export default Form;
+export default React.memo(Form);
