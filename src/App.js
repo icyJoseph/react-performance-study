@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import uuid from "uuid/v1";
 import Header from "./Header";
 import Form from "./Form";
 import Visitors from "./Visitors";
@@ -34,9 +34,12 @@ class App extends Component {
     const { visitors } = this.state;
     const fullName = this.fullName.current.value;
     const message = this.message.current.value;
-    const visitDate = new Date().toISOString().split("T")[0];
-    const updatedVisitors = [{ fullName, message, visitDate }].concat(visitors);
     if (fullName && message) {
+      const id = uuid();
+      const visitDate = new Date().toISOString().split("T")[0];
+      const updatedVisitors = [{ id, fullName, message, visitDate }].concat(
+        visitors
+      );
       await this.setStateAsync({ visitors: updatedVisitors });
 
       // clear the fields
