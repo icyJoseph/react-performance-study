@@ -1,6 +1,8 @@
 import React from "react";
 
 export function Visitors({ visitors }) {
+  // the issue highlighted in App.js, ends up here
+  // when visitors extends one element, all items li items will get a new index
   return (
     <ul className="list-group">
       {visitors.map((visitor, index) => (

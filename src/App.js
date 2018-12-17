@@ -34,9 +34,13 @@ class App extends Component {
     const { visitors } = this.state;
     const fullName = this.fullName.current.value;
     const message = this.message.current.value;
-    const visitDate = new Date().toISOString().split("T")[0];
-    const updatedVisitors = [{ fullName, message, visitDate }].concat(visitors);
     if (fullName && message) {
+      // here have an issue -> we do not pass a unique ID to the new visitor element
+      // further more we put the new visitor at the beginning!
+      const visitDate = new Date().toISOString().split("T")[0];
+      const updatedVisitors = [{ fullName, message, visitDate }].concat(
+        visitors
+      );
       await this.setStateAsync({ visitors: updatedVisitors });
 
       // clear the fields
