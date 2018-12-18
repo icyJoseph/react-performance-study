@@ -32,8 +32,8 @@ class App extends Component {
     e.preventDefault();
 
     const { visitors } = this.state;
-    const fullName = this.fullName.current.value;
-    const message = this.message.current.value;
+    const fullName = this.fullName.current.value.trim();
+    const message = this.message.current.value.trim();
     if (fullName && message) {
       // here have an issue -> we do not pass a unique ID to the new visitor element
       // furthermore we put the new visitor at the beginning!
