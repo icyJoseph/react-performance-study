@@ -1,11 +1,47 @@
-import React, { Component } from "react";
+import React, { lazy, Suspense, Component } from "react";
 import axios from "axios";
 import uuid from "uuid/v1";
-import Header from "./Header";
-import Form from "./Form";
-import Visitors from "./Visitors";
+// import Header from "./Header";
+// import Form from "./Form";
+// import Visitors from "./Visitors";
 
 import "./App.css";
+
+const LazyVisitors = lazy(() =>
+  import(/* webpackChunkName: "lazy-visitors" */ "./Visitors")
+);
+
+function SuspenseVisitors({ ...props }) {
+  return (
+    <Suspense fallback={null}>
+      <LazyVisitors {...props} />
+    </Suspense>
+  );
+}
+
+const LazyForm = lazy(() =>
+  import(/* webpackChunkName: "lazy-form" */ "./Form")
+);
+
+function SuspenseForm({ ...props }) {
+  return (
+    <Suspense fallback={null}>
+      <LazyForm {...props} />
+    </Suspense>
+  );
+}
+
+const LazyHeader = lazy(() =>
+  import(/* webpackChunkName: "lazy-header" */ "./Header")
+);
+
+function SuspenseHeader() {
+  return (
+    <Suspense fallback={null}>
+      <LazyHeader />
+    </Suspense>
+  );
+}
 
 class App extends Component {
   state = {
@@ -55,19 +91,19 @@ class App extends Component {
     return (
       <div>
         <div className="App">
-          <Header />
+          <SuspenseHeader />
         </div>
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              <Form
+              <SuspenseForm
                 fullNameRef={this.fullName}
                 messageRef={this.message}
                 onSubmit={this.addNewMessage}
               />
             </div>
             <div className="col-lg-6">
-              <Visitors visitors={visitors} />
+              <SuspenseVisitors visitors={visitors} />
             </div>
           </div>
         </div>
