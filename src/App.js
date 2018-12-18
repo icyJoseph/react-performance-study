@@ -36,7 +36,7 @@ class App extends Component {
     const message = this.message.current.value;
     if (fullName && message) {
       // here have an issue -> we do not pass a unique ID to the new visitor element
-      // further more we put the new visitor at the beginning!
+      // furthermore we put the new visitor at the beginning!
       const visitDate = new Date().toISOString().split("T")[0];
       const updatedVisitors = [{ fullName, message, visitDate }].concat(
         visitors
