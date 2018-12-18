@@ -32,8 +32,8 @@ class App extends Component {
     e.preventDefault();
 
     const { visitors } = this.state;
-    const fullName = this.fullName.current.value;
-    const message = this.message.current.value;
+    const fullName = this.fullName.current.value.trim();
+    const message = this.message.current.value.trim();
     if (fullName && message) {
       const id = uuid();
       const visitDate = new Date().toISOString().split("T")[0];
