@@ -4,9 +4,11 @@ This repo exists to demonstrate how coding style, available tooling and taking t
 
 ## About the Application
 
-This app allows you to log yourself as a visitor. You can enter your full name and message and add the message to an ever growing list. This ever growring list is shows messages from most recent at the top, to oldest at the bottom.
+This app allows you to log yourself as a visitor, by adding your full name and a message to an ever growing list of visitors.
 
-Each visitor is an object with the following shape:
+Messages from visitors are ordered from most recent at the top, to oldest at the bottom.
+
+Each visitor and its message are represented by an object with the following shape:
 
 ```json
 {
