@@ -4,6 +4,12 @@ This repo exists to demonstrate how coding style, available tooling and taking t
 
 ## About the Application
 
+To start, run:
+
+```
+yarn install && yarn start-all
+```
+
 This app allows you to log yourself as a visitor. You can enter your full name and message and add the message to an ever growing list. This ever growring list is shows messages from most recent at the top, to oldest at the bottom.
 
 Each visitor is an object with the following shape:
@@ -30,6 +36,8 @@ To measure performance we use `http://localhost:3000/?react_perf`
 - should-component-update
 - lazy-loading
 - master
+
+Additionally we also analyze a production build.
 
 ## `bad-performance-0`
 
@@ -144,7 +152,9 @@ Back in `Visitors.js`, something very bad has happened, every element on visitor
 
 React has to re render every element, because the Virtual DOM has totally changed!
 
-> The Performance tools in Chrome, show rendering times between `80 to 100 ms`.
+> The Performance tools in Chrome, show rendering times between `70 to 90 ms`.
+
+![Bad Performance 0 Benchmark][bad-performance-0]
 
 ## `bad-performance-1`
 
@@ -208,7 +218,9 @@ export default Visitors;
 
 Much better! React's Virtual DOM now has better knowledge of each visitor and therefore can avoid re rendering to them DOM. The browser will just handle the addition of a new child.
 
-> The Performance tools in Chrome, show rendering times between `60 to 90 ms`.
+> The Performance tools in Chrome, show rendering times between `50 to 70 ms`.
+
+![Bad Performance 1 Benchmark][bad-performance-1]
 
 Still high. Since this is a static list, without animations or anything else relying in order, we don't gain so much from using index correctly, but surely there are cases where one can gain a lot.
 
@@ -253,11 +265,17 @@ export default React.memo(Visitor);
 
 Since, the Visitor React Element is has very shallow props, we can make it into a function and memoize it. This means, avoid recalculating the what to render, given the same inputs.
 
-There's a couple of ways to do this, using `function` and `React.memo`, with `shouldComponentUpdate`, or using `PureComponent`.
+There's a couple of ways to do this:
+
+- using `function` and `React.memo`
+- with `shouldComponentUpdate` life cycle
+- or using `PureComponent`
 
 Aside from creating very beautiful and more readable code, we actually gain a huge boost.
 
-> The Performance tools in Chrome, show rendering times between `15 to 20 ms`.
+> The Performance tools in Chrome, show great improvements by using Memo.
+
+![Memo Only][memo-only]
 
 ## `pure-components`
 
@@ -287,7 +305,9 @@ export default Visitor;
 
 `PureComponent` does a shallow comparisson. It also compares immutable objects, to determine if the component should re-render.
 
-> The Performance tools in Chrome, show rendering times between `15 to 20 ms`.
+> The Performance tools in Chrome indicate similar reconciliation times between Memo and PureComponents.
+
+![PureComponent][pure-components]
 
 ## `should-component-update`
 
@@ -340,7 +360,9 @@ export default Visitor;
 
 This lifecycle method can be a glass cannon. It allows us to tell React when to let `componentUpdate`, or render run, but we must do the check. And the check can be expensive. For that reason we fallback to using the id, to decide whether or not to re-render.
 
-> The Performance tools in Chrome, show rendering times between `20 to 30 ms`.
+> The React reconciliation time in Chrome Tools is about the same as memo-only and pure components.
+
+![Should Component Update][should-component-update]
 
 ## lazy-loading
 
@@ -350,7 +372,7 @@ This application is very lightweight, which makes it easier to analyze what we a
 
 First, we use `webpack-bundle-analyzer`, a tool to create a graphical report of how our application is structured.
 
-[Analyzer](file:///home/joseph/Documents/webDev/performance/build/report.html)
+[See Report from Analyzer](https://icjoseph.com/performance/report.html)
 
 As one can expect, the actual application bundle, our JavaScript, is not that big. The whole application weighs about 100kb, and of that we are about 4%.
 
@@ -400,16 +422,30 @@ Now, we can examine our Network requests in Chrome, and see that we serve three 
 
 Each component is now roughly a 1000 Bytes. Had this been a more complicated app, perhaps we could have hundreds of Kb's wait for user demand, and not be pushed on first load.
 
-> The Performance tools in Chrome, show rendering times between `15 to 20 ms`.
+> The Performance tools in Chrome show the reconciliation time for React.
+
+> Although, there was no improvement, we can see, the `Suspense Update`, which doesn't make things slower!
+
+![Lazy Loading][lazy-loading]
 
 ## BUILD!
 
 React, on development mode, serves with tons of add-ons to make our life easier.
 
-However, users do not need these. By creating a production build, we can strip all of these out.
+However, users do not need these. By creating a production build, we can strip them out.
 
 We'll lose the ability to pass `?react_perf` to the URL, and any `prop-types` we might be using, but the end user doesn't care.
 
 The `create-react-app` does this by default, when running `yarn build`.
 
-> The Performance tools in Chrome, show submit event handling times between `5 to 8 ms`.
+> In the Chrome dev tools, we can see how long it takes to digest the event.
+
+![Production Build][production-build]
+
+[bad-performance-0]: https://icjoseph.com/static/bad-performance-0.png "Bad Performance 0"
+[bad-performance-1]: https://icjoseph.com/static/bad-performance-1.png "Bad Performance 1"
+[memo-only]: https://icjoseph.com/static/memo-only.png "Memo Only"
+[pure-components]: https://icjoseph.com/static/pure-components.png "Pure Components"
+[should-component-update]: https://icjoseph.com/static/should-component-update.png "Should Component Update"
+[lazy-loading]: https://icjoseph.com/static/lazy-loading.png "Lazy Loading"
+[production-build]: https://icjoseph.com/static/production-build.png "Production Build"
