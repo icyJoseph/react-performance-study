@@ -1,9 +1,16 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 // shallow comparisson of props,
 // {id: 1, name: 2} !== {id:2, name:3}
 // but fails to do {id: 1, name:2, dates: [{...}]}
-class Visitor extends PureComponent {
+class Visitor extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.visitorId !== this.props.visitorId) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const { fullName, message, visitDate } = this.props;
     return (
