@@ -6,7 +6,7 @@ This repo exists to demonstrate how coding style, available tooling and taking t
 
 This app allows you to log yourself as a visitor, by adding your full name and a message to an ever growing list of visitors.
 
-Messages from visitors are ordered from most recent at the top, to oldest at the bottom.
+Most recent messages are shown at the top.
 
 Each visitor and its message are represented by an object with the following shape:
 
@@ -370,7 +370,7 @@ This lifecycle method can be a glass cannon. It allows us to tell React when to 
 
 ## lazy-loading
 
-Performance is also affected by loading times.
+Performance is also affected by loading time.
 
 This application is very lightweight, which makes it easier to analyze what we are serving to the browser.
 
