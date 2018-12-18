@@ -4,12 +4,6 @@ This repo exists to demonstrate how coding style, available tooling and taking t
 
 ## About the Application
 
-To start, run:
-
-```
-yarn install && yarn start-all
-```
-
 This app allows you to log yourself as a visitor. You can enter your full name and message and add the message to an ever growing list. This ever growring list is shows messages from most recent at the top, to oldest at the bottom.
 
 Each visitor is an object with the following shape:
@@ -26,6 +20,12 @@ Each visitor is an object with the following shape:
 A mock server delivers all visitors in an array, already sorted by date, from most recent to oldest.
 
 To measure performance we use `http://localhost:3000/?react_perf`
+
+To start the application:
+
+```
+yarn install && yarn start-all
+```
 
 ## Available Branches
 
@@ -226,7 +226,7 @@ Still high. Since this is a static list, without animations or anything else rel
 
 ## `memo-only`
 
-Most of React's power comes from Single File Components, so let's use them!
+We notice that the `<li>` element inside Visitors could be extracted away into it's own file, allowing us to read it as a Stateless Functional Component own its own. Which can be optimized further by React.
 
 ```jsx
 import React from "react";
@@ -263,21 +263,23 @@ function Visitor({ fullName, message, visitDate }) {
 export default React.memo(Visitor);
 ```
 
+> Notice the `export default React.memo(Visitor)`
+
 Since, the Visitor React Element is has very shallow props, we can make it into a function and memoize it. This means, avoid recalculating the what to render, given the same inputs.
 
 There's a couple of ways to do this:
 
-- using `function` and `React.memo`
-- with `shouldComponentUpdate` life cycle
-- or using `PureComponent`
+- using `function` and `React.memo`, as we've just done with Visitor
+- or using `PureComponent` [here](#pure-components)
+- with `shouldComponentUpdate` life cycle [here](#should-component-update)
 
-Aside from creating very beautiful and more readable code, we actually gain a huge boost.
+Aside from creating very beautiful and more readable code, we actually gain a huge performance boost.
 
 > The Performance tools in Chrome, show great improvements by using Memo.
 
 ![Memo Only][memo-only]
 
-## `pure-components`
+## <a id="pure-components"></a>`pure-components`
 
 ```jsx
 import React, { PureComponent } from "react";
@@ -309,7 +311,7 @@ export default Visitor;
 
 ![PureComponent][pure-components]
 
-## `should-component-update`
+## <a id="should-component-update"></a>`should-component-update`
 
 ```jsx
 import React from "react";
@@ -441,6 +443,22 @@ The `create-react-app` does this by default, when running `yarn build`.
 > In the Chrome dev tools, we can see how long it takes to digest the event.
 
 ![Production Build][production-build]
+
+## Inspiration
+
+This study is inspired by, [this great talk.](https://www.youtube.com/watch?v=nhuwPinAV7E&t=830s)
+
+## License
+
+The MIT License (MIT)
+
+Copyright (c) 2018 Joseph Chamochumbi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [bad-performance-0]: https://icjoseph.com/static/bad-performance-0.png "Bad Performance 0"
 [bad-performance-1]: https://icjoseph.com/static/bad-performance-1.png "Bad Performance 1"
