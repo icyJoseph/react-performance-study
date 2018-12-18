@@ -1,15 +1,21 @@
-import React from "react";
+import React, { PureComponent } from "react";
 
-function Visitor({ fullName, message, visitDate }) {
-  return (
-    <li className="list-group-item d-flex-column justify-content-between align-items-center">
-      <div className="lead">{fullName}</div>
-      <div className="text-secondary light-text">{message}</div>
-      <div className="text-muted light-text">
-        <em>{visitDate}</em>
-      </div>
-    </li>
-  );
+// shallow comparisson of props,
+// {id: 1, name: 2} !== {id:2, name:3}
+// but fails to do {id: 1, name:2, dates: [{...}]}
+class Visitor extends PureComponent {
+  render() {
+    const { fullName, message, visitDate } = this.props;
+    return (
+      <li className="list-group-item d-flex-column justify-content-between align-items-center">
+        <div className="lead">{fullName}</div>
+        <div className="text-secondary light-text">{message}</div>
+        <div className="text-muted light-text">
+          <em>{visitDate}</em>
+        </div>
+      </li>
+    );
+  }
 }
 
-export default React.memo(Visitor);
+export default Visitor;
