@@ -81,11 +81,9 @@ class App extends Component {
 }
 ```
 
-One thing to notice right away is the use of `async` life cycle methods. Since, `this.setState` behaves asynchronously, it does make sense to use `async/await`.
+One thing to notice right away is the use of `async` life cycle methods. This allows you to use await inside the life cycle, also consider that `this.setState` behaves asynchronously.
 
-Remember that `this.setState`, takes 2 arguments.
-
-The first argument is the new state, or keys to update. The second is a callback, to execute once the update has finished! Now that's asynchronous behavior.
+Remember that `this.setState`, takes 2 arguments. The first argument is the new state, or keys to update. The second is a callback, to execute once the update has finished!
 
 So what's inside `<Visitors/>`?
 
@@ -116,9 +114,9 @@ export default Visitors;
 
 We simply map over the visitors array, rendering a new list element every time. If we don't use the `key` prop, React will give us a warning, so we use the `index` of argument of the `map` function.
 
-This will work, but...
+This will work, but creates a problem.
 
-Lets look at the Form handler. We want every new message to be at the top, and we want to avoid having to force the client to sort them out again, the back end already did that for us.
+Lets look at the Form handler. We want every new message to be at the top, and we want to avoid having to force the client-side code to sort them out again, the back end should have done this for us.
 
 ```js
 addNewMessage = async e => {
@@ -148,11 +146,9 @@ Then we set the state, and once done, we clear the inputs.
 
 Always return null.
 
-One big issue, is that our new visitor does not have an `id`! We should be `POST`ing this data or `PUT`ing to the back end. Anyhow, that's the least of our problems now.
-
 Back in `Visitors.js`, something very bad has happened, every element on visitors, has been pushed one index to the right and a new one appended to the beginning, which means the key prop points at a different visitor, now, everytime, 100 + 1 times.
 
-React has to re render every element, because the Virtual DOM has totally changed!
+React has to render every element again, because the Virtual DOM has totally changed!
 
 > The Performance tools in Chrome, show rendering times between `70 to 90 ms`.
 
@@ -162,7 +158,7 @@ React has to re render every element, because the Virtual DOM has totally change
 
 A great improvement to `bad-performance-0` would have been to make use of the id's sent by the back end.
 
-So let's do that! We just need a way to generate a new id for each new message.
+So let's do that! We just need a way to generate a new id for each new message. The back end should do it, but in this setup it does not.
 
 We can use timestamps or an npm package. I use [uuid.](https://www.npmjs.com/package/uuid)
 
@@ -267,7 +263,7 @@ export default React.memo(Visitor);
 
 > Notice the `export default React.memo(Visitor)`
 
-Since, the Visitor React Element is has very shallow props, we can make it into a function and memoize it. This means, avoid recalculating the what to render, given the same inputs.
+Since, the Visitor React Element has very shallow props, we can make it into a function and memoize it. This means, avoid recalculating the what to render, given the same inputs.
 
 There's a couple of ways to do this:
 
@@ -362,7 +358,7 @@ class Visitor extends Component {
 export default Visitor;
 ```
 
-This lifecycle method can be a glass cannon. It allows us to tell React when to let `componentUpdate`, or render run, but we must do the check. And the check can be expensive. For that reason we fallback to using the id, to decide whether or not to re-render.
+This lifecycle method can be a glass cannon. It allows us to tell React when to let `componentDidUpdate`, or render run, but we must do the check. And the check can be expensive. For that reason we fallback to using the id, to decide whether or not to re-render.
 
 > The React reconciliation time in Chrome Tools is about the same as memo-only and pure components.
 
