@@ -458,10 +458,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[bad-performance-0]: https://icjoseph.com/static/bad-performance-0.png "Bad Performance 0"
-[bad-performance-1]: https://icjoseph.com/static/bad-performance-1.png "Bad Performance 1"
-[memo-only]: https://icjoseph.com/static/memo-only.png "Memo Only"
-[pure-components]: https://icjoseph.com/static/pure-components.png "Pure Components"
-[should-component-update]: https://icjoseph.com/static/should-component-update.png "Should Component Update"
-[lazy-loading]: https://icjoseph.com/static/lazy-loading.png "Lazy Loading"
-[production-build]: https://icjoseph.com/static/production-build.png "Production Build"
+[bad-performance-0]: https://icjoseph.com/_static/bad-performance-0.png "Bad Performance 0"
+[bad-performance-1]: https://icjoseph.com/_static/bad-performance-1.png "Bad Performance 1"
+[memo-only]: https://icjoseph.com/_static/memo-only.png "Memo Only"
+[pure-components]: https://icjoseph.com/_static/pure-components.png "Pure Components"
+[should-component-update]: https://icjoseph.com/_static/should-component-update.png "Should Component Update"
+[lazy-loading]: https://icjoseph.com/_static/lazy-loading.png "Lazy Loading"
+[production-build]: https://icjoseph.com/_static/production-build.png "Production Build"
